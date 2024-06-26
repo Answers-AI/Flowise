@@ -43,6 +43,7 @@ import logger from './logger'
 import { utilAddChatMessage } from './addChatMesage'
 import { buildAgentGraph } from './buildAgentGraph'
 import { getErrorMessage } from '../errors/utils'
+import checkOwnership from './checkOwnership'
 
 /**
  * Build Chatflow
@@ -65,6 +66,9 @@ export const utilBuildChatflow = async (req: Request, socketIO?: Server, isInter
             throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `Chatflow ${chatflowid} not found`)
         }
 
+        if (!(await checkOwnership(chatflow, req.user?.id, req.user?.organizationId))) {
+            throw new InternalFlowiseError(StatusCodes.UNAUTHORIZED, `Unauthorized`)
+        }
         const chatId = incomingInput.chatId ?? incomingInput.overrideConfig?.sessionId ?? uuidv4()
         const userMessageDateTime = new Date()
 
@@ -340,7 +344,9 @@ export const utilBuildChatflow = async (req: Request, socketIO?: Server, isInter
                   uploads: incomingInput.uploads,
                   socketIO,
                   socketIOClientId: incomingInput.socketIOClientId,
-                  prependMessages
+                  prependMessages,
+                  user: req.user,
+                  sessionId
               })
             : await nodeInstance.run(nodeToExecuteData, incomingInput.question, {
                   chatId,
@@ -350,7 +356,9 @@ export const utilBuildChatflow = async (req: Request, socketIO?: Server, isInter
                   databaseEntities,
                   analytic: chatflow.analytic,
                   uploads: incomingInput.uploads,
-                  prependMessages
+                  prependMessages,
+                  user: req.user,
+                  sessionId
               })
         result = typeof result === 'string' ? { text: result } : result
 

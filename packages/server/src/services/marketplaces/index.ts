@@ -3,13 +3,47 @@ import * as fs from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import { InternalFlowiseError } from '../../errors/internalFlowiseError'
 import { getErrorMessage } from '../../errors/utils'
+import { getRunningExpressApp } from '../../utils/getRunningExpressApp'
+import { ChatFlow, ChatflowVisibility } from '../../database/entities/ChatFlow'
+import checkOwnership from '../../utils/checkOwnership'
+import { In, Any } from 'typeorm'
 
 // Get all templates for marketplaces
-const getAllTemplates = async () => {
+const getAllTemplates = async (userId?: string, organizationId?: string) => {
     try {
+        // TODO: Pull from all chatflows and tools in the database that have visibility Marketplace
         let marketplaceDir = path.join(__dirname, '..', '..', '..', 'marketplaces', 'chatflows')
         let jsonsInDir = fs.readdirSync(marketplaceDir).filter((file) => path.extname(file) === '.json')
+
         let templates: any[] = []
+
+        const appServer = getRunningExpressApp()
+        //**
+        let chatflows = await appServer.AppDataSource.getRepository(ChatFlow).find({
+            // TODO: Figure out why this wher condition doesn't work
+            // where: { visibility: Any(['Marketplace']) }
+        })
+
+        chatflows = chatflows.filter((chatflow) => chatflow.visibility?.includes(ChatflowVisibility.MARKETPLACE))
+        chatflows = chatflows.filter((chatflow) => checkOwnership(chatflow, userId, organizationId))
+
+        if (!chatflows) {
+            throw new InternalFlowiseError(StatusCodes.NOT_FOUND, `Chatflows not found`)
+        }
+        chatflows.forEach((chatflow) => {
+            const template = {
+                id: chatflow.id,
+                templateName: chatflow.name,
+                flowData: chatflow.flowData,
+                badge: chatflow.userId === userId ? `SHARED BY ME` : `SHARED BY OTHERS`,
+                // framework: `chatflow.framework`,
+                // categories: `chatflow.categories`,
+                type: chatflow.type
+                // description: `chatflow.description`
+            }
+            templates.push(template)
+        })
+
         jsonsInDir.forEach((file, index) => {
             const filePath = path.join(__dirname, '..', '..', '..', 'marketplaces', 'chatflows', file)
             const fileData = fs.readFileSync(filePath)
