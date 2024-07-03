@@ -28,4 +28,12 @@ export class ChatMessageFeedback implements IChatMessageFeedback {
     @Column({ type: 'timestamp' })
     @CreateDateColumn()
     createdDate: Date
+
+    @Index()
+    @Column({ type: 'uuid', nullable: true })
+    userId?: string
+
+    @Index()
+    @Column({ type: 'uuid', nullable: true })
+    organizationId?: string
 }

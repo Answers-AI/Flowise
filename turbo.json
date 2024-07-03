@@ -1,12 +1,22 @@
 {
     "$schema": "https://turbo.build/schema.json",
+
     "pipeline": {
         "build": {
             "dependsOn": ["^build"],
-            "outputs": ["dist/**"]
+            "outputs": ["dist/**", "build/**"]
         },
         "test": {},
         "dev": {
+            "cache": false
+        },
+        "typeorm:migration-run": {
+            "cache": false
+        },
+        "typeorm:migration-generate": {
+            "cache": false
+        },
+        "typeorm:migration-show": {
             "cache": false
         }
     }

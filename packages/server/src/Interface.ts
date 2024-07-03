@@ -16,6 +16,21 @@ export enum ChatMessageRatingType {
 /**
  * Databases
  */
+export interface IUser {
+    id: string
+    name: string
+    email: string
+    organizationId?: string
+    updatedDate: Date
+    createdDate: Date
+}
+export interface IOrganization {
+    id: string
+    name: string
+    updatedDate: Date
+    createdDate: Date
+}
+
 export interface IChatFlow {
     id: string
     name: string
@@ -29,7 +44,10 @@ export interface IChatFlow {
     chatbotConfig?: string
     apiConfig?: string
     category?: string
+    visibility?: string[]
     type?: ChatflowType
+    userId?: string
+    organizationId?: string
 }
 
 export interface IChatMessage {
@@ -248,6 +266,7 @@ export interface ICredentialReqBody {
     name: string
     credentialName: string
     plainDataObj: ICredentialDataDecrypted
+    userId?: string
 }
 
 // Decrypted credential object sent back to client

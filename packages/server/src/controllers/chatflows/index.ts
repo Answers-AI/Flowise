@@ -6,6 +6,7 @@ import { getApiKey } from '../../utils/apiKey'
 import { InternalFlowiseError } from '../../errors/internalFlowiseError'
 import { StatusCodes } from 'http-status-codes'
 import { ChatflowType } from '../../Interface'
+import checkOwnership from '../../utils/checkOwnership'
 
 const checkIfChatflowIsValidForStreaming = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -42,7 +43,7 @@ const deleteChatflow = async (req: Request, res: Response, next: NextFunction) =
         if (typeof req.params === 'undefined' || !req.params.id) {
             throw new InternalFlowiseError(StatusCodes.PRECONDITION_FAILED, `Error: chatflowsRouter.deleteChatflow - id not provided!`)
         }
-        const apiResponse = await chatflowsService.deleteChatflow(req.params.id)
+        const apiResponse = await chatflowsService.deleteChatflow(req.params.id, req.user?.id)
         return res.json(apiResponse)
     } catch (error) {
         next(error)
@@ -51,7 +52,17 @@ const deleteChatflow = async (req: Request, res: Response, next: NextFunction) =
 
 const getAllChatflows = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const apiResponse = await chatflowsService.getAllChatflows(req.query?.type as ChatflowType)
+        const userId = req.user?.id
+        if (!userId) {
+            return res.status(401).send('Unauthorized')
+        }
+        const filter = req.query.filter ? JSON.parse(decodeURIComponent(req.query.filter as string)) : undefined
+        const apiResponse = await chatflowsService.getAllChatflows(
+            req.query?.type as ChatflowType,
+            filter,
+            userId,
+            req.user?.organizationId
+        )
         return res.json(apiResponse)
     } catch (error) {
         next(error)
@@ -80,10 +91,15 @@ const getChatflowByApiKey = async (req: Request, res: Response, next: NextFuncti
 
 const getChatflowById = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        if (!req.user) throw new InternalFlowiseError(StatusCodes.UNAUTHORIZED, `Error: chatflowsRouter.getChatflowById - Unauthorized!`)
+
         if (typeof req.params === 'undefined' || !req.params.id) {
             throw new InternalFlowiseError(StatusCodes.PRECONDITION_FAILED, `Error: chatflowsRouter.getChatflowById - id not provided!`)
         }
         const apiResponse = await chatflowsService.getChatflowById(req.params.id)
+        if (!(await checkOwnership(apiResponse, req.user.id, req.user.organizationId))) {
+            throw new InternalFlowiseError(StatusCodes.UNAUTHORIZED, `Unauthorized`)
+        }
         return res.json(apiResponse)
     } catch (error) {
         next(error)
@@ -92,13 +108,37 @@ const getChatflowById = async (req: Request, res: Response, next: NextFunction) 
 
 const saveChatflow = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        if (!req.user) {
+            throw new InternalFlowiseError(StatusCodes.UNAUTHORIZED, `Error: chatflowsRouter.saveChatflow - Unauthorized!`)
+        }
         if (!req.body) {
             throw new InternalFlowiseError(StatusCodes.PRECONDITION_FAILED, `Error: chatflowsRouter.saveChatflow - body not provided!`)
         }
         const body = req.body
         const newChatFlow = new ChatFlow()
-        Object.assign(newChatFlow, body)
+
+        Object.assign(newChatFlow, { ...body, userId: req.user?.id, organizationId: req.user?.organizationId })
         const apiResponse = await chatflowsService.saveChatflow(newChatFlow)
+
+        // TODO: Abstract sending to AnswerAI through events endpoint and move to service
+        const ANSWERAI_DOMAIN = req.auth?.payload.answersDomain ?? process.env.ANSWERAI_DOMAIN ?? 'https://beta.theanswer.ai'
+        try {
+            await fetch(ANSWERAI_DOMAIN + '/api/sidekicks/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + req.auth?.token!,
+                    cookie: req.headers.cookie!
+                },
+                body: JSON.stringify({
+                    chatflow: apiResponse,
+                    chatflowDomain: req.auth?.payload?.chatflowDomain
+                })
+            })
+        } catch (err) {
+            throw new InternalFlowiseError(StatusCodes.PRECONDITION_FAILED, `Error: chatflowsRouter.saveChatflow - AnswerAI sync failed!`)
+        }
+
         return res.json(apiResponse)
     } catch (error) {
         next(error)
@@ -115,6 +155,9 @@ const updateChatflow = async (req: Request, res: Response, next: NextFunction) =
             return res.status(404).send(`Chatflow ${req.params.id} not found`)
         }
 
+        if (!(await checkOwnership(chatflow, req.user?.id, req.user?.organizationId))) {
+            throw new InternalFlowiseError(StatusCodes.UNAUTHORIZED, `Unauthorized`)
+        }
         const body = req.body
         const updateChatFlow = new ChatFlow()
         Object.assign(updateChatFlow, body)
@@ -123,6 +166,26 @@ const updateChatflow = async (req: Request, res: Response, next: NextFunction) =
         createRateLimiter(updateChatFlow)
 
         const apiResponse = await chatflowsService.updateChatflow(chatflow, updateChatFlow)
+
+        // TODO: Abstract sending to AnswerAI through events endpoint and move to service
+        const ANSWERAI_DOMAIN = req.auth?.payload.answersDomain ?? process.env.ANSWERAI_DOMAIN ?? 'https://beta.theanswer.ai'
+        try {
+            await fetch(ANSWERAI_DOMAIN + '/api/sidekicks/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + req.auth?.token!,
+                    cookie: req.headers.cookie!
+                },
+                body: JSON.stringify({
+                    chatflow: apiResponse,
+                    chatflowDomain: req.auth?.payload?.chatflowDomain
+                })
+            })
+        } catch (err) {
+            throw new InternalFlowiseError(StatusCodes.PRECONDITION_FAILED, `Error: chatflowsRouter.saveChatflow - AnswerAI sync failed!`)
+        }
+
         return res.json(apiResponse)
     } catch (error) {
         next(error)
