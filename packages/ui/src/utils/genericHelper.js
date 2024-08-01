@@ -341,7 +341,20 @@ export const getFolderName = (base64ArrayStr) => {
     }
 }
 
-export const generateExportFlowData = (flowData) => {
+export const generateExportFlowData = (chatflow) => {
+    let flowData
+    try {
+        flowData = JSON.parse(chatflow.flowData)
+    } catch (error) {
+        return {
+            id: chatflow?.id,
+            name: chatflow?.name,
+            description: chatflow?.description,
+            nodes: [],
+            edges: [],
+            error: error
+        }
+    }
     const nodes = flowData.nodes
     const edges = flowData.edges
 
@@ -383,6 +396,15 @@ export const generateExportFlowData = (flowData) => {
         nodes[i].data = newNodeData
     }
     const exportJson = {
+        id: chatflow.id,
+        name: chatflow.name,
+        description: chatflow.description,
+        chatbotConfig: chatflow.chatbotConfig,
+        visibility: chatflow.visibility,
+        category: chatflow.category,
+        type: chatflow.type,
+        userId: chatflow.userId,
+        organizationId: chatflow.organizationId,
         nodes,
         edges
     }
