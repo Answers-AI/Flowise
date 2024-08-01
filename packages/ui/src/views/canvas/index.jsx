@@ -159,7 +159,7 @@ const Canvas = () => {
             const flowData = JSON.parse(file)
             const nodes = flowData.nodes || []
             const edges = flowData.edges || []
-            
+
             let existingChatflow = null
             let hasAccess = false
 
@@ -172,11 +172,11 @@ const Canvas = () => {
                         console.log("User doesn't have access to this chatflow. Creating a new one.")
                         hasAccess = false
                     } else {
-                        throw error  // Re-throw if it's not a 401 error
+                        throw error // Re-throw if it's not a 401 error
                     }
                 }
             }
-            
+
             if (existingChatflow && hasAccess) {
                 // Ask user if they want to overwrite or create a new chatflow
                 const userChoice = await confirm({
@@ -185,7 +185,7 @@ const Canvas = () => {
                     confirmButtonName: 'Overwrite',
                     cancelButtonName: 'Create New'
                 })
-                
+
                 if (!userChoice) {
                     // Create new chatflow
                     delete flowData.id
@@ -194,7 +194,7 @@ const Canvas = () => {
                 // User doesn't have access or chatflow doesn't exist, create a new chatflow
                 delete flowData.id
             }
-            
+
             const newChatflow = {
                 id: flowData.id, // This will be undefined if we're creating a new chatflow
                 name: flowData.name || `Copy of ${flowData.name}`,
@@ -535,47 +535,47 @@ const Canvas = () => {
 
     // Initialization
     useEffect(() => {
-    setIsSyncNodesButtonEnabled(false)
-    setIsUpsertButtonEnabled(false)
-    if (chatflowId) {
-        getSpecificChatflowApi.request(chatflowId)
-    } else {
-        if (localStorage.getItem('duplicatedFlowData')) {
-            const duplicatedFlowData = JSON.parse(localStorage.getItem('duplicatedFlowData'))
-            setNodes(duplicatedFlowData.nodes || [])
-            setEdges(duplicatedFlowData.edges || [])
-            dispatch({
-                type: SET_CHATFLOW,
-                chatflow: {
-                    ...duplicatedFlowData,
-                    id: undefined,
-                    name: `Copy of ${duplicatedFlowData.name}`,
-                    deployed: false,
-                    isPublic: false
-                }
-            })
-            setTimeout(() => localStorage.removeItem('duplicatedFlowData'), 0)
+        setIsSyncNodesButtonEnabled(false)
+        setIsUpsertButtonEnabled(false)
+        if (chatflowId) {
+            getSpecificChatflowApi.request(chatflowId)
         } else {
-            setNodes([])
-            setEdges([])
-            dispatch({
-                type: SET_CHATFLOW,
-                chatflow: {
-                    name: templateName ? `Copy of ${templateName}` : `Untitled ${canvasTitle}`
-                }
-            })
+            if (localStorage.getItem('duplicatedFlowData')) {
+                const duplicatedFlowData = JSON.parse(localStorage.getItem('duplicatedFlowData'))
+                setNodes(duplicatedFlowData.nodes || [])
+                setEdges(duplicatedFlowData.edges || [])
+                dispatch({
+                    type: SET_CHATFLOW,
+                    chatflow: {
+                        ...duplicatedFlowData,
+                        id: undefined,
+                        name: `Copy of ${duplicatedFlowData.name}`,
+                        deployed: false,
+                        isPublic: false
+                    }
+                })
+                setTimeout(() => localStorage.removeItem('duplicatedFlowData'), 0)
+            } else {
+                setNodes([])
+                setEdges([])
+                dispatch({
+                    type: SET_CHATFLOW,
+                    chatflow: {
+                        name: templateName ? `Copy of ${templateName}` : `Untitled ${canvasTitle}`
+                    }
+                })
+            }
         }
-    }
 
-    getNodesApi.request()
+        getNodesApi.request()
 
-    // Clear dirty state before leaving and remove any ongoing test triggers and webhooks
-    return () => {
-        setTimeout(() => dispatch({ type: REMOVE_DIRTY }), 0)
-    }
+        // Clear dirty state before leaving and remove any ongoing test triggers and webhooks
+        return () => {
+            setTimeout(() => dispatch({ type: REMOVE_DIRTY }), 0)
+        }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         setCanvasDataStore(canvas)

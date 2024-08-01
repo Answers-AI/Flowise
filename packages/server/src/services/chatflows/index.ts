@@ -80,22 +80,19 @@ const checkIfChatflowIsValidForUploads = async (chatflowId: string): Promise<any
 
 const deleteChatflow = async (chatflowId: string, userId?: string, organizationId?: string): Promise<any> => {
     try {
-        console.log(`Attempting to delete chatflow: ${chatflowId}, userId: ${userId}, organizationId: ${organizationId}`)
         const appServer = getRunningExpressApp()
 
         // First, try to find the chatflow
         const chatflow = await appServer.AppDataSource.getRepository(ChatFlow).findOne({
             where: { id: chatflowId, userId, organizationId }
         })
-        console.log(`Found chatflow:`, chatflow)
 
         if (!chatflow) {
-            console.log(`Chatflow not found with id: ${chatflowId}`)
             return { affected: 0, message: 'Chatflow not found' }
         }
 
         const dbResponse = await appServer.AppDataSource.getRepository(ChatFlow).delete({ id: chatflowId, userId, organizationId })
-        console.log(`Delete response:`, dbResponse)
+
         try {
             // Delete all uploads corresponding to this chatflow
             await removeFolderFromStorage(chatflowId)

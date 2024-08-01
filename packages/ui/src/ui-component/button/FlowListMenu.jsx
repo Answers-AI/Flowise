@@ -99,11 +99,9 @@ export default function FlowListMenu({ chatflow, isAgentCanvas }) {
     }
 
     const handleDuplicate = () => {
-        debugger
         setAnchorEl(null)
         try {
             const duplicatedFlow = generateExportFlowData(chatflow)
-            duplicatedFlow.name = `Copy of ${duplicatedFlow.name}`
             delete duplicatedFlow.id
             localStorage.setItem('duplicatedFlowData', JSON.stringify(duplicatedFlow))
             window.open(`${uiBaseURL}/${isAgentCanvas ? 'agentcanvas' : 'canvas'}`, '_blank')

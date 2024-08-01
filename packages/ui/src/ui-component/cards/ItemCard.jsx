@@ -46,7 +46,7 @@ const ItemCard = ({ data: initialData, images, nodeTypes, onClick, type, updateF
     }
 
     const renderActionButton = () => {
-        if (type !== 'marketplace') {
+        if (type !== 'marketplace' && type !== 'tools') {
             return (
                 <Box
                     sx={{
