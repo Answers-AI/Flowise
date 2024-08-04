@@ -283,5 +283,15 @@ export interface IUploadFileSizeAndTypes {
     maxUploadSize: number
 }
 
+export interface IJourney {
+    id: string
+    title: string
+    goal: string
+    documents: string
+    tools: string
+    chatflows: string
+    userId: string
+}
+
 // DocumentStore related
 export * from './Interface.DocumentStore'

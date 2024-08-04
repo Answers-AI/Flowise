@@ -25,7 +25,8 @@
         "postinstall": "husky install",
         "migration:generate": "turbo typeorm:migration-generate",
         "migration:run": "npx dotenv -- turbo typeorm:migration-run",
-        "migration:show": "npx dotenv -- turbo typeorm:migration-show"
+        "migration:show": "npx dotenv -- turbo typeorm:migration-show",
+        "claude": "node combine-files.js"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx,json,md}": "eslint --fix"

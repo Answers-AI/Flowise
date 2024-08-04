@@ -23,6 +23,8 @@ import { AddTypeToChatFlow1766759476232 } from './1766759476232-AddTypeToChatFlo
 import { AddAnswersConfig1714692854264 } from './1714692854264-AddAnswersConfig'
 import { AddUser1716422641414 } from './1716422641414-AddUser'
 import { AddDescriptionToChatFlow1722099922876 } from './1722101786123-AddDescriptionToChatflow'
+import { AddJourneyTable1766759476234 } from './1766759476234-AddJourneyTable'
+import { UpdateJourneyTable1766759476235 } from './1766759476235-UpdateJourneyTable'
 
 export const mysqlMigrations = [
     Init1693840429259,
@@ -49,5 +51,7 @@ export const mysqlMigrations = [
     AddLeadToChatMessage1711538023578,
     AddAgentReasoningToChatMessage1714679514451,
     AddTypeToChatFlow1766759476232,
-    AddDescriptionToChatFlow1722099922876
+    AddDescriptionToChatFlow1722099922876,
+    AddJourneyTable1766759476234,
+    UpdateJourneyTable1766759476235
 ]
