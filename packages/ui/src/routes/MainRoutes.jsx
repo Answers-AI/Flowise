@@ -37,6 +37,9 @@ const LoaderConfigPreviewChunks = Loadable(lazy(() => import('@/views/docstore/L
 // jounrey
 const Journeys = Loadable(lazy(() => import('@/views/journeys')))
 const JourneyDetails = Loadable(lazy(() => import('@/views/journeys/JourneyDetails')))
+
+// quickchat
+const QuickChatDetails = Loadable(lazy(() => import('@/views/quickchat')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -102,6 +105,10 @@ const MainRoutes = {
         {
             path: '/journeys/:id',
             element: <JourneyDetails />
+        },
+        {
+            path: '/quickchat',
+            element: <QuickChatDetails />
         }
     ]
 }
