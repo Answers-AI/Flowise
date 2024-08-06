@@ -37,7 +37,7 @@ import {
     IconTool,
     IconSquareFilled
 } from '@tabler/icons-react'
-import robotPNG from '@/assets/images/robot.png'
+import robotPNG from '@/assets/images/answerai-logo.png'
 import userPNG from '@/assets/images/account.png'
 import multiagent_supervisorPNG from '@/assets/images/multiagent_supervisor.png'
 import multiagent_workerPNG from '@/assets/images/multiagent_worker.png'
@@ -491,10 +491,12 @@ export const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, preview
     // Handle form submission
     const handleSubmit = async (e, promptStarterInput) => {
         if (e) e.preventDefault()
+        console.log('handleSubmit started')
 
         if (!promptStarterInput && userInput.trim() === '') {
             const containsAudio = previews.filter((item) => item.type === 'audio').length > 0
             if (!(previews.length >= 1 && containsAudio)) {
+                console.log('Exiting early: No input and no audio')
                 return
             }
         }
@@ -503,18 +505,33 @@ export const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, preview
 
         if (promptStarterInput !== undefined && promptStarterInput.trim() !== '') input = promptStarterInput
 
+        console.log('Setting loading to true')
         setLoading(true)
-        const urls = previews.map((item) => {
-            return {
-                data: item.data,
-                type: item.type,
-                name: item.name,
-                mime: item.mime
-            }
-        })
+        const urls =
+            previews && previews.length > 0
+                ? previews.map((item) => ({
+                      data: item.data,
+                      type: item.type,
+                      name: item.name,
+                      mime: item.mime
+                  }))
+                : []
+        console.log('Clearing previews')
         clearPreviews()
-        setMessages((prevMessages) => [...prevMessages, { message: input, type: 'userMessage', fileUploads: urls }])
 
+        console.log('Setting messages')
+        try {
+            setMessages((prevMessages) => {
+                console.log('Previous messages:', prevMessages)
+                const newMessages = [...prevMessages, { message: input, type: 'userMessage', fileUploads: urls }]
+                console.log('New messages:', newMessages)
+                return newMessages
+            })
+        } catch (err) {
+            console.error('Error in setMessages:', err)
+        }
+
+        console.log('Preparing to call prediction API')
         // Send user question to Prediction Internal API
         try {
             const params = {
@@ -525,7 +542,9 @@ export const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, preview
             if (leadEmail) params.leadEmail = leadEmail
             if (isChatFlowAvailableToStream) params.socketIOClientId = socketIOClientId
 
+            console.log('Calling prediction API with params:', params)
             const response = await predictionApi.sendMessageAndGetPrediction(chatflowid, params)
+            console.log('Prediction API response:', response)
 
             if (response.data) {
                 const data = response.data
@@ -706,7 +725,7 @@ export const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, preview
     // Auto scroll chat to bottom
     useEffect(() => {
         scrollToBottom()
-    }, [messages])
+    }, [open, messages])
 
     useEffect(() => {
         if (isDialog && inputRef) {
@@ -783,8 +802,8 @@ export const ChatMessage = ({ open, chatflowid, isAgentCanvas, isDialog, preview
 
     useEffect(() => {
         // wait for audio recording to load and then send
-        const containsAudio = previews.filter((item) => item.type === 'audio').length > 0
-        if (previews.length >= 1 && containsAudio) {
+        const containsAudio = previews?.filter((item) => item.type === 'audio').length > 0
+        if (previews?.length >= 1 && containsAudio) {
             setIsRecording(false)
             setRecordingNotSupported(false)
             handlePromptClick('')

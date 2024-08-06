@@ -34,6 +34,12 @@ const DocumentStoreDetail = Loadable(lazy(() => import('@/views/docstore/Documen
 const ShowStoredChunks = Loadable(lazy(() => import('@/views/docstore/ShowStoredChunks')))
 const LoaderConfigPreviewChunks = Loadable(lazy(() => import('@/views/docstore/LoaderConfigPreviewChunks')))
 
+// jounrey
+const Journeys = Loadable(lazy(() => import('@/views/journeys')))
+const JourneyDetails = Loadable(lazy(() => import('@/views/journeys/JourneyDetails')))
+
+// quickchat
+const QuickChatDetails = Loadable(lazy(() => import('@/views/quickchat')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -91,6 +97,18 @@ const MainRoutes = {
         {
             path: '/document-stores/:id/:name',
             element: <LoaderConfigPreviewChunks />
+        },
+        {
+            path: '/journeys',
+            element: <Journeys />
+        },
+        {
+            path: '/journeys/:id',
+            element: <JourneyDetails />
+        },
+        {
+            path: '/quickchat',
+            element: <QuickChatDetails />
         }
     ]
 }
