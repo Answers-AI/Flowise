@@ -60,7 +60,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
 const MainLayout = () => {
     const theme = useTheme()
     const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'))
-    const [isInIframe, setIsInIframe] = useState(window?.parent !== window)
+    const [isInIframe, setIsInIframe] = useState(false)
 
     // Handle left drawer
     const leftDrawerOpened = useSelector((state) => (isInIframe ? true : state.customization.opened))
@@ -71,7 +71,7 @@ const MainLayout = () => {
 
     useEffect(() => {
         // Detect if loaded inside an iframe
-        setIsInIframe(window.parent !== window)
+        // setIsInIframe(window.parent !== window)
 
         setTimeout(() => dispatch({ type: SET_MENU, opened: !matchDownMd }), 0)
     }, [matchDownMd, dispatch])
@@ -97,7 +97,7 @@ const MainLayout = () => {
                         </Toolbar>
                     </AppBar>
                 )}
-                <Sidebar drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} isInIframe={isInIframe} />
+                {/* <Sidebar drawerOpen={leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} isInIframe={isInIframe} /> */}
             </>
             {/* main content */}
             <Main theme={theme} open={leftDrawerOpened} isInIframe={isInIframe}>
