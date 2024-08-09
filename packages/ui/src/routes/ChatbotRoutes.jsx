@@ -10,11 +10,11 @@ const ChatbotFull = Loadable(lazy(() => import('@/views/chatbot')))
 // ==============================|| CANVAS ROUTING ||============================== //
 
 const ChatbotRoutes = {
-    path: '/sidekick-studio',
+    path: '/',
     element: <MinimalLayout />,
     children: [
         {
-            path: '/sidekick-studio/chatbot/:id',
+            path: '/chatbot/:id',
             element: <ChatbotFull />
         }
     ]

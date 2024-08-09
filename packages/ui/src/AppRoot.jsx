@@ -37,7 +37,7 @@ const AppRoot = ({ organizationId }) => {
                     authorizationParams={authorizationParams}
                 >
                     <Provider store={store}>
-                        <BrowserRouter>
+                        <BrowserRouter basename={'/sidekick-studio'}>
                             <SnackbarProvider>
                                 <ConfirmContextProvider>
                                     <ReactFlowContext>

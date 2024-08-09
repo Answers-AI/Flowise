@@ -37,59 +37,59 @@ const LoaderConfigPreviewChunks = Loadable(lazy(() => import('@/views/docstore/L
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
-    path: '/sidekick-studio',
+    path: '/',
     element: <MainLayout />,
     children: [
         {
-            path: '/sidekick-studio',
+            path: '',
             element: <Chatflows />
         },
         {
-            path: '/sidekick-studio/chatflows',
+            path: '/chatflows',
             element: <Chatflows />
         },
         {
-            path: '/sidekick-studio/agentflows',
+            path: '/agentflows',
             element: <Agentflows />
         },
         {
-            path: '/sidekick-studio/marketplaces',
+            path: '/marketplaces',
             element: <Marketplaces />
         },
         {
-            path: '/sidekick-studio/apikey',
+            path: '/apikey',
             element: <APIKey />
         },
         {
-            path: '/sidekick-studio/tools',
+            path: '/tools',
             element: <Tools />
         },
         {
-            path: '/sidekick-studio/assistants',
+            path: '/assistants',
             element: <Assistants />
         },
         {
-            path: '/sidekick-studio/credentials',
+            path: '/credentials',
             element: <Credentials />
         },
         {
-            path: '/sidekick-studio/variables',
+            path: '/variables',
             element: <Variables />
         },
         {
-            path: '/sidekick-studio/document-stores',
+            path: '/document-stores',
             element: <Documents />
         },
         {
-            path: '/sidekick-studio/document-stores/:id',
+            path: '/document-stores/:id',
             element: <DocumentStoreDetail />
         },
         {
-            path: '/sidekick-studio/document-stores/chunks/:id/:id',
+            path: '/document-stores/chunks/:id/:id',
             element: <ShowStoredChunks />
         },
         {
-            path: '/sidekick-studio/document-stores/:id/:name',
+            path: '/document-stores/:id/:name',
             element: <LoaderConfigPreviewChunks />
         }
     ]
