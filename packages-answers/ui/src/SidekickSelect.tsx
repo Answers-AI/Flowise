@@ -21,7 +21,7 @@ const SidekickSelect = ({ onSidekickSelected, sidekicks: defaultSidekicks = [] }
         try {
             const res = await fetch(url)
             if (res.status === 401) {
-                router.push('/api/auth/login')
+                router.push('/api/auth/login?returnTo=' + encodeURIComponent(window.location.href))
             }
             return res.json()
         } catch (error) {
