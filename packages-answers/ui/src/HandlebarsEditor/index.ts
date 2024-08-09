@@ -1,2 +1,2 @@
-import HandlebarsEditor from './HandlebarsEditor';
-export default HandlebarsEditor;
+import HandlebarsEditor from './HandlebarsEditor'
+export default HandlebarsEditor

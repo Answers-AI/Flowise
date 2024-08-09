@@ -1,3 +1,3 @@
-import ChatLayout from './ChatLayout.Server';
+import ChatLayout from './ChatLayout.Server'
 
-export default ChatLayout;
+export default ChatLayout

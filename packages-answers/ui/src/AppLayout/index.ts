@@ -1,3 +1,3 @@
-import AppLayout from './AppLayout.Server';
+import AppLayout from './AppLayout.Server'
 
-export default AppLayout;
+export default AppLayout

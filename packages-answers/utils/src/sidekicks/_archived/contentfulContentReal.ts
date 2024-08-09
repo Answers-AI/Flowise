@@ -1,15 +1,15 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 
 const sidekick: Sidekick = {
-  departments: ['marketing'],
-  label: 'Contentful Entry Real',
-  value: 'contentfulContentReal',
-  placeholder: 'I can help you publish content in Contentful',
-  getSystemPromptTemplate: () => {
-    return `You are a Contentful Entry Expert. You assist people in publishing content in Contentful`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `Convert this blog post content in this chain. I want you to make the following changes to the blog post:
+    departments: ['marketing'],
+    label: 'Contentful Entry Real',
+    value: 'contentfulContentReal',
+    placeholder: 'I can help you publish content in Contentful',
+    getSystemPromptTemplate: () => {
+        return `You are a Contentful Entry Expert. You assist people in publishing content in Contentful`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `Convert this blog post content in this chain. I want you to make the following changes to the blog post:
     ${query}
     """
     Use this JSON template to create the content entry for this blog post:
@@ -178,11 +178,11 @@ const sidekick: Sidekick = {
   Always end with the following iframe: <iframe src="https://answerai-marketing-git-last-rev-starter-lastrev.vercel.app/live-preview?id=3tJBL4yg6WdoPWUHxHZim2" />
   write the new JSON in markdown using the previous blog here:\n\n
   """
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.metadata.filePath}\n${context.metadata.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.metadata.filePath}\n${context.metadata.text}\n\n`
+    }
+}
 
-export default sidekick;
+export default sidekick

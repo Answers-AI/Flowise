@@ -1,30 +1,29 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const sales: Sidekick = {
-  departments: [
-    'marketing',
-    'sales',
-    'customer support',
-    'engineering',
-    'product management',
-    'legal',
-    'hr',
-    'education',
-    'real estate',
-    'administrative',
-    'leadership'
-  ],
-  label: 'Meeting Analysis',
-  value: 'meetingAnalysis',
-  temperature: 1,
-  placeholder:
-    'You can analyze a meeting transcript and ask questions, generate supparies and more!',
-  getSystemPromptTemplate: () => {
-    return `You are an assistant that helps employees at my company. You are a helpful and friendly assistant.
+    departments: [
+        'marketing',
+        'sales',
+        'customer support',
+        'engineering',
+        'product management',
+        'legal',
+        'hr',
+        'education',
+        'real estate',
+        'administrative',
+        'leadership'
+    ],
+    label: 'Meeting Analysis',
+    value: 'meetingAnalysis',
+    temperature: 1,
+    placeholder: 'You can analyze a meeting transcript and ask questions, generate supparies and more!',
+    getSystemPromptTemplate: () => {
+        return `You are an assistant that helps employees at my company. You are a helpful and friendly assistant.
     You can analyze a meeting transcript and help the user summarize, analyze, and gain insight from meeting transcripts.
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `Your task is to analyze text from a transcript of a meeting.
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `Your task is to analyze text from a transcript of a meeting.
     The user has requested the following information: ${query}\n\n:
 
     These are the parts of the transcript the user wants you to analyze:
@@ -51,15 +50,15 @@ const sales: Sidekick = {
     1. Summarize the user request.
     2. List out every instance of the transcript that is relevant to the user request and cite the approximate time in the transcript that the relevant information is found and write out the exact text.
     Analyisis:\n\n
-    `;
-  },
-  contextStringRender: (context) => {
-    return `
+    `
+    },
+    contextStringRender: (context) => {
+        return `
       Meeting: ${context.title}\n
       Url: ${context.url}\n
       Transcript: ${context.text}\n\n
-    `;
-  }
-};
+    `
+    }
+}
 
-export default sales;
+export default sales

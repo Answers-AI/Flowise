@@ -1,1 +1,1 @@
-export { MessageCard } from './Message';
+export { MessageCard } from './Message'

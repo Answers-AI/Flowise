@@ -139,9 +139,7 @@ export class App {
             })
         }
 
-
         this.app.use(authenticationHandlerMiddleware({ whitelistURLs, AppDataSource: this.AppDataSource }))
-
 
         this.app.use('/api/v1', flowiseApiV1Router)
 

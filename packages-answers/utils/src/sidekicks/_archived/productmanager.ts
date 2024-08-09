@@ -1,14 +1,14 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const productmanager: Sidekick = {
-  departments: ['product management', 'engineering'],
-  label: 'Product Manager',
-  value: 'product',
-  placeholder: 'I will document the product and its features',
-  getSystemPromptTemplate: () => {
-    return `You are a product manager that can document the product and its features.`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `I want you to create a documentation spec based on this existing product documentation:
+    departments: ['product management', 'engineering'],
+    label: 'Product Manager',
+    value: 'product',
+    placeholder: 'I will document the product and its features',
+    getSystemPromptTemplate: () => {
+        return `You are a product manager that can document the product and its features.`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `I want you to create a documentation spec based on this existing product documentation:
     This is the context I have so far. Each chunk of text is from a different source.
     """
     {{context}}
@@ -32,11 +32,11 @@ const productmanager: Sidekick = {
     Suggest followup questions the user can ask to make you more confident in your reponse.
     Always end your response with citing your sources in a list. Cite ALL Sources used in the context in the format of a markdown link. 
     - citedSource: [http://example.com](My Example Site)\n
-    `;
-  },
-  contextStringRender: (context) => {
-    return `citedSource: ${context.filePath ?? context.url}\n${context.code ?? context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `citedSource: ${context.filePath ?? context.url}\n${context.code ?? context.text}\n\n`
+    }
+}
 
-export default productmanager;
+export default productmanager

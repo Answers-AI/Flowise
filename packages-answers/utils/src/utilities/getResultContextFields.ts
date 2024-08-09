@@ -1,13 +1,13 @@
 const getResultContextFields = (): Record<string, any> => {
-  const resultContextFields = {
-    title: '',
-    filePath: '',
-    url: '',
-    text: '',
-    code: ''
-  };
+    const resultContextFields = {
+        title: '',
+        filePath: '',
+        url: '',
+        text: '',
+        code: ''
+    }
 
-  return resultContextFields;
-};
+    return resultContextFields
+}
 
-export default getResultContextFields;
+export default getResultContextFields

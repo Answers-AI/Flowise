@@ -1,21 +1,21 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 
 const sidekick: Sidekick = {
-  departments: ['marketing', 'leadership', 'product management'],
-  label: 'PRFAQ Creator',
-  value: 'prfaqCreator',
-  placeholder: 'I can help you create a PRFAQ',
-  temperature: 1,
-  maxCompletionTokens: 1500,
-  getSystemPromptTemplate: () => {
-    return `You are an expert at Workingbackwards. You can create a PRFAQ for a new feature or product.
+    departments: ['marketing', 'leadership', 'product management'],
+    label: 'PRFAQ Creator',
+    value: 'prfaqCreator',
+    placeholder: 'I can help you create a PRFAQ',
+    temperature: 1,
+    maxCompletionTokens: 1500,
+    getSystemPromptTemplate: () => {
+        return `You are an expert at Workingbackwards. You can create a PRFAQ for a new feature or product.
     You are going to ask me for the feature idea and then you are going to help me iterate on a PRFAQ for it.
     I will answer the questions you ask me and you will use that to create a new PRFAQ.
     We will iterate on the PRFAQ until we are both happy with it.
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `write a PRFAQ for the following feature idea:
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `write a PRFAQ for the following feature idea:
     ${query}\n\n
     
     Use this context to help you write the PRFAQ:
@@ -44,11 +44,11 @@ const sidekick: Sidekick = {
     Q: What does it do? 
     Brainstorm multiple versions of "How are we going to build it" that cover different aspects of the engineering lifecycle from design, development, and support and suggest answers.
     """\n\n
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath}\n${context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath}\n${context.text}\n\n`
+    }
+}
 
-export default sidekick;
+export default sidekick

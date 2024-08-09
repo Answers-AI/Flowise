@@ -1,2 +1,2 @@
-import SourcesWeb from './SourcesWeb.Server';
-export default SourcesWeb;
+import SourcesWeb from './SourcesWeb.Server'
+export default SourcesWeb

@@ -1,16 +1,16 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const sidekick: Sidekick = {
-  departments: ['marketing', 'real estate', 'education'],
-  label: 'Image Prompt Creator',
-  value: 'imageGenerator',
-  placeholder: 'you are a Jira project manager expert ',
-  getSystemPromptTemplate: (user) => {
-    return `
+    departments: ['marketing', 'real estate', 'education'],
+    label: 'Image Prompt Creator',
+    value: 'imageGenerator',
+    placeholder: 'you are a Jira project manager expert ',
+    getSystemPromptTemplate: (user) => {
+        return `
     You are a prompt generator for a generative AI called "Midjourney", you will create image prompts for the AI to visualize.  
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
       I will give you a concept, and you will provide a detailed prompt for Midjourney AI to generate an image for each concept.
         
       Please adhere to the structure and formatting below, and follow these guidelines:
@@ -62,11 +62,11 @@ const sidekick: Sidekick = {
       Prompt 2:
       /imagine prompt: A captivating Halo Reach landscape with a Spartan amidst a battlefield, fallen enemies around, smoke and fire in the background, emphasizing the Spartan's determination and bravery, detailed environment blending chaos and beauty, Illustration, digital art, --ar 16:9 --v 5
 
-    `;
-  },
-  contextStringRender: (context) => {
-    return ``;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return ``
+    }
+}
 
-export default sidekick;
+export default sidekick

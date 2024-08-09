@@ -1,31 +1,31 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const sidekick: Sidekick = {
-  departments: [
-    'marketing',
-    'sales',
-    'customer support',
-    'engineering',
-    'product management',
-    'legal',
-    'hr',
-    'education',
-    'real estate',
-    'administrative',
-    'leadership'
-  ],
-  label: 'Root Cause Analysis',
-  value: 'rootCauseAnalysis',
-  maxCompletionTokens: 2000,
-  placeholder: 'I can help you get to the root cause of a problem and help develop a plan',
-  getSystemPromptTemplate: () => {
-    return `You are a deep analytical thinker that can get to the root cause of a problem and help develop a plan to solve it.
+    departments: [
+        'marketing',
+        'sales',
+        'customer support',
+        'engineering',
+        'product management',
+        'legal',
+        'hr',
+        'education',
+        'real estate',
+        'administrative',
+        'leadership'
+    ],
+    label: 'Root Cause Analysis',
+    value: 'rootCauseAnalysis',
+    maxCompletionTokens: 2000,
+    placeholder: 'I can help you get to the root cause of a problem and help develop a plan',
+    getSystemPromptTemplate: () => {
+        return `You are a deep analytical thinker that can get to the root cause of a problem and help develop a plan to solve it.
     You are using the five whys technique which is helpful in digging for answers. You will start with the problem and work backwards to sequence all of the contributing events.
     You will start with the user entering the problem and work backwards to sequence all of the contributing events.
     Take that answer and ask why again, drilling down until you reach a cause that can't be broken down any further.
-    Explore all potential causes initially, and narrow down the list to the most likely culprits.`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    Explore all potential causes initially, and narrow down the list to the most likely culprits.`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
     ${query}\n
     Help me brainstorm all of the contributing events that led to this problem.
     Ask why the problem happened and write the answer down below.
@@ -44,11 +44,11 @@ const sidekick: Sidekick = {
     ###
     Once you have completed your analysis, end with a cause-and-effect list and a summary of your thinking proccess and plan to solve the problem.
 
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath}\n${context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath}\n${context.text}\n\n`
+    }
+}
 
-export default sidekick;
+export default sidekick

@@ -1,15 +1,15 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 
 const contentful: Sidekick = {
-  departments: ['marketing', 'customer support'],
-  label: 'Contentful Expert',
-  value: 'contentful',
-  placeholder: 'I can help you with questions about Contentful',
-  getSystemPromptTemplate: () => {
-    return `You are Contentful expert.`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `I have this question I want to ask you that I believe is in this context:
+    departments: ['marketing', 'customer support'],
+    label: 'Contentful Expert',
+    value: 'contentful',
+    placeholder: 'I can help you with questions about Contentful',
+    getSystemPromptTemplate: () => {
+        return `You are Contentful expert.`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `I have this question I want to ask you that I believe is in this context:
     """
     ${context}
     """
@@ -20,11 +20,11 @@ const contentful: Sidekick = {
     Where there may be incomplete context, explain how that impacts your answer.
     Explain to me where you are not confident.
     Suggest followup information the user can ask to make you more confident in your reponse.
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.metadata.filePath}\n${context.metadata.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.metadata.filePath}\n${context.metadata.text}\n\n`
+    }
+}
 
-export default contentful;
+export default contentful

@@ -1,50 +1,50 @@
-import { prisma } from '@db/client';
-import { User } from 'types';
+import { prisma } from '@db/client'
+import { User } from 'types'
 
 export const createNewActiveUserPlan = async ({
-  user,
-  planId,
-  renewalDate,
-  stripeSubscriptionId,
-  additionalTokens = 0
+    user,
+    planId,
+    renewalDate,
+    stripeSubscriptionId,
+    additionalTokens = 0
 }: {
-  user: User;
-  planId: number;
-  renewalDate?: Date;
-  stripeSubscriptionId?: string;
-  additionalTokens?: number;
+    user: User
+    planId: number
+    renewalDate?: Date
+    stripeSubscriptionId?: string
+    additionalTokens?: number
 }) => {
-  if (!renewalDate) {
-    renewalDate = new Date();
-    renewalDate.setMonth(renewalDate.getMonth() + 1);
-  }
-
-  const plan = await prisma.plan.findUnique({
-    where: {
-      id: planId
-    },
-    select: {
-      id: true,
-      tokenLimit: true
+    if (!renewalDate) {
+        renewalDate = new Date()
+        renewalDate.setMonth(renewalDate.getMonth() + 1)
     }
-  });
 
-  if (!plan) {
-    throw new Error(`Plan with id ${planId} not found`);
-  }
+    const plan = await prisma.plan.findUnique({
+        where: {
+            id: planId
+        },
+        select: {
+            id: true,
+            tokenLimit: true
+        }
+    })
 
-  const activeUserPlan = await prisma.activeUserPlan.create({
-    data: {
-      planId: plan.id,
-      userId: user.id,
-      renewalDate,
-      tokensLeft: plan.tokenLimit + additionalTokens,
-      stripeSubscriptionId
-    },
-    include: {
-      plan: true
+    if (!plan) {
+        throw new Error(`Plan with id ${planId} not found`)
     }
-  });
 
-  return activeUserPlan;
-};
+    const activeUserPlan = await prisma.activeUserPlan.create({
+        data: {
+            planId: plan.id,
+            userId: user.id,
+            renewalDate,
+            tokensLeft: plan.tokenLimit + additionalTokens,
+            stripeSubscriptionId
+        },
+        include: {
+            plan: true
+        }
+    })
+
+    return activeUserPlan
+}

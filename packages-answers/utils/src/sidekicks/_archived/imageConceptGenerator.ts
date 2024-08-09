@@ -1,18 +1,18 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const sidekick: Sidekick = {
-  departments: ['marketing', 'real estate', 'education'],
-  label: 'Image Concept Creator',
-  value: 'imageConceptGenerator',
-  placeholder: 'I help you brainstorm concepts for images',
-  temperature: 1,
-  maxCompletionTokens: 500,
-  getSystemPromptTemplate: (user) => {
-    return `
+    departments: ['marketing', 'real estate', 'education'],
+    label: 'Image Concept Creator',
+    value: 'imageConceptGenerator',
+    placeholder: 'I help you brainstorm concepts for images',
+    temperature: 1,
+    maxCompletionTokens: 500,
+    getSystemPromptTemplate: (user) => {
+        return `
     You are a creative director for a marketing agency. You are brainstorming concepts for images for a website.  
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
       I will give you some text, and you will provide 10 different concepts for images that could be used for the text.
       
       Example:
@@ -28,11 +28,11 @@ const sidekick: Sidekick = {
       Text: ${query}
 
       Concepts:\n
-    `;
-  },
-  contextStringRender: (context) => {
-    return ``;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return ``
+    }
+}
 
-export default sidekick;
+export default sidekick

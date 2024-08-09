@@ -1,15 +1,14 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const sales: Sidekick = {
-  departments: ['sales'],
-  label: 'Sales Proposal Expert',
-  value: 'sales',
-  placeholder:
-    'Paste in a clients requirements, and I can create a sales proposal timeline for you.',
-  getSystemPromptTemplate: () => {
-    return `You are a sales timeline proposal assistant.`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `I want you to create a proposal timeline for this project based on the following context from previous proposals:
+    departments: ['sales'],
+    label: 'Sales Proposal Expert',
+    value: 'sales',
+    placeholder: 'Paste in a clients requirements, and I can create a sales proposal timeline for you.',
+    getSystemPromptTemplate: () => {
+        return `You are a sales timeline proposal assistant.`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `I want you to create a proposal timeline for this project based on the following context from previous proposals:
     ###
     ${context}
     ###
@@ -40,11 +39,11 @@ const sales: Sidekick = {
     <list of risks that may impact the project>
     ## Why my company is the best choice
     <list of reasons why we are the best choice>
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath ?? context.url}\n${context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath ?? context.url}\n${context.text}\n\n`
+    }
+}
 
-export default sales;
+export default sales

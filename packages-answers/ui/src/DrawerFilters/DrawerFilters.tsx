@@ -1,24 +1,20 @@
-'use client';
+'use client'
 
+import { useAnswers } from '../AnswersContext'
+import SourcesToolbar from '../SourcesToolbar'
 
-import { useAnswers } from '../AnswersContext';
-import SourcesToolbar from '../SourcesToolbar';
-
-import { AppSettings } from 'types';
-
-
+import { AppSettings } from 'types'
 
 export interface DrawerFiltersProps {
-  appSettings: AppSettings;
+    appSettings: AppSettings
 }
 
 export default function DrawerFilters({ appSettings }: DrawerFiltersProps) {
-  const { showFilters, setShowFilters } = useAnswers();
+    const { showFilters, setShowFilters } = useAnswers()
 
-  return (
-    <>
-    
-        <SourcesToolbar appSettings={appSettings} />
-    </>
-  );
+    return (
+        <>
+            <SourcesToolbar appSettings={appSettings} />
+        </>
+    )
 }

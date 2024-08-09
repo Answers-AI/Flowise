@@ -1,16 +1,16 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const marketing: Sidekick = {
-  departments: ['marketing'],
-  label: 'Landing Page Creator',
-  value: 'landingPageCreator',
-  placeholder: 'I can help you create a landing page for your product',
-  getSystemPromptTemplate: () => {
-    return `You are an digital marketing and English writing expert.
+    departments: ['marketing'],
+    label: 'Landing Page Creator',
+    value: 'landingPageCreator',
+    placeholder: 'I can help you create a landing page for your product',
+    getSystemPromptTemplate: () => {
+        return `You are an digital marketing and English writing expert.
     You assist people to create landing pages for their websites.
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
     You will be creative and write a landing page that is easy to understand for a non-technical audience.
     
     The landing page feature: ${query}
@@ -76,11 +76,11 @@ const marketing: Sidekick = {
     Paragraph: A paragraph about the blog post and why it is important
     Image: Image of the blog post
 
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath}\n${context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath}\n${context.text}\n\n`
+    }
+}
 
-export default marketing;
+export default marketing

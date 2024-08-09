@@ -1,2 +1,2 @@
-import SidekickFormLayout from './SidekickFormLayout.Server';
-export default SidekickFormLayout;
+import SidekickFormLayout from './SidekickFormLayout.Server'
+export default SidekickFormLayout

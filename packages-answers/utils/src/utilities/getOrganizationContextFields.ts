@@ -1,19 +1,19 @@
-import { Organization } from 'types';
+import { Organization } from 'types'
 
 const getOrganizationContextFields = (organization?: Organization): Record<string, any> => {
-  if (!organization) return {};
+    if (!organization) return {}
 
-  const organizationContext: Record<string, any> = (organization?.contextFields ?? []).reduce(
-    (result, { fieldId, fieldTextValue }) => ({
-      ...result,
-      [fieldId]: fieldTextValue
-    }),
-    {}
-  );
+    const organizationContext: Record<string, any> = (organization?.contextFields ?? []).reduce(
+        (result, { fieldId, fieldTextValue }) => ({
+            ...result,
+            [fieldId]: fieldTextValue
+        }),
+        {}
+    )
 
-  organizationContext.name = organization?.name;
+    organizationContext.name = organization?.name
 
-  return organizationContext;
-};
+    return organizationContext
+}
 
-export default getOrganizationContextFields;
+export default getOrganizationContextFields

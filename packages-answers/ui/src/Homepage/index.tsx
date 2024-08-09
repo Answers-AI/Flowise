@@ -1,3 +1,3 @@
-import Homepage from './Homepage.Server';
+import Homepage from './Homepage.Server'
 
-export default Homepage;
+export default Homepage

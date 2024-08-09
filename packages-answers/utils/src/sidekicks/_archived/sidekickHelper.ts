@@ -1,27 +1,26 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const defaultPrompt: Sidekick = {
-  departments: [
-    'marketing',
-    'sales',
-    'customer support',
-    'engineering',
-    'product management',
-    'legal',
-    'hr',
-    'education',
-    'real estate',
-    'administrative',
-    'leadership'
-  ],
-  label: 'Sidekick Helper',
-  value: 'sidekickHelper',
-  placeholder:
-    'I can help you figure out what sidekick or group of sidekicks to use. Just give me a topic',
-  getSystemPromptTemplate: () => {
-    return `You are a helpful and friendly assistant.You help direct me to the right sidekick to use. A sisdekick is a pre-trained AI assistant that is designed to help with a specific task. You goal is to help me figure out what sidekick to use for a specific set of tasks gased off my goals.`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    departments: [
+        'marketing',
+        'sales',
+        'customer support',
+        'engineering',
+        'product management',
+        'legal',
+        'hr',
+        'education',
+        'real estate',
+        'administrative',
+        'leadership'
+    ],
+    label: 'Sidekick Helper',
+    value: 'sidekickHelper',
+    placeholder: 'I can help you figure out what sidekick or group of sidekicks to use. Just give me a topic',
+    getSystemPromptTemplate: () => {
+        return `You are a helpful and friendly assistant.You help direct me to the right sidekick to use. A sisdekick is a pre-trained AI assistant that is designed to help with a specific task. You goal is to help me figure out what sidekick to use for a specific set of tasks gased off my goals.`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
     A user needs help figuring out what sidekick to use. A Sidekick is a specific AI assistant that is designed to help with a specific task.
     
     These are the sidekicks that can help you with the users request.
@@ -82,11 +81,11 @@ const defaultPrompt: Sidekick = {
     3. Repeat Step 2 as needed to identify all of the Sidekicks that will be used to help the user complete their request.
   
     ## Suggested Sidekicks:\n
-    `;
-  },
-  contextStringRender: (context) => {
-    return `source: ${context?.filePath || context?.url}\n${context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `source: ${context?.filePath || context?.url}\n${context.text}\n\n`
+    }
+}
 
-export default defaultPrompt;
+export default defaultPrompt

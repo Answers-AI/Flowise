@@ -1,22 +1,22 @@
-import { User } from 'types';
+import { User } from 'types'
 
 const getUserContextFields = (user?: User): Record<string, any> => {
-  if (!user) return {};
+    if (!user) return {}
 
-  const userContext: Record<string, any> = (user?.contextFields ?? []).reduce(
-    (result, { fieldId, fieldTextValue }) => ({
-      ...result,
-      [fieldId]: fieldTextValue
-    }),
-    {}
-  );
+    const userContext: Record<string, any> = (user?.contextFields ?? []).reduce(
+        (result, { fieldId, fieldTextValue }) => ({
+            ...result,
+            [fieldId]: fieldTextValue
+        }),
+        {}
+    )
 
-  // Add relative user fields that should be available in the context
-  userContext.name = user?.name;
-  userContext.role = user?.role;
-  userContext.email = user?.email;
+    // Add relative user fields that should be available in the context
+    userContext.name = user?.name
+    userContext.role = user?.role
+    userContext.email = user?.email
 
-  return userContext;
-};
+    return userContext
+}
 
-export default getUserContextFields;
+export default getUserContextFields

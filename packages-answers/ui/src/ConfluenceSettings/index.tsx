@@ -1,2 +1,2 @@
-import ConfluenceSettings from './ConfluenceSettings';
-export default ConfluenceSettings;
+import ConfluenceSettings from './ConfluenceSettings'
+export default ConfluenceSettings

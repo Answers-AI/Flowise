@@ -1,30 +1,30 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const sidekick: Sidekick = {
-  departments: [
-    'marketing',
-    'sales',
-    'customer support',
-    'engineering',
-    'product management',
-    'legal',
-    'hr',
-    'education',
-    'real estate',
-    'administrative',
-    'leadership'
-  ],
-  label: 'Slide Deck Creator',
-  value: 'slideDeckCreator',
-  temperature: 1,
-  placeholder: 'I can help you create a great slide deck slide from a topic and audience',
-  getSystemPromptTemplate: (user) => {
-    return `
+    departments: [
+        'marketing',
+        'sales',
+        'customer support',
+        'engineering',
+        'product management',
+        'legal',
+        'hr',
+        'education',
+        'real estate',
+        'administrative',
+        'leadership'
+    ],
+    label: 'Slide Deck Creator',
+    value: 'slideDeckCreator',
+    temperature: 1,
+    placeholder: 'I can help you create a great slide deck slide from a topic and audience',
+    getSystemPromptTemplate: (user) => {
+        return `
     You are an AI assistant that is specifically designed to create slide decks for presentations.
     Your task is to help the user create a slide deck for a presentation.
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
     You are continuing to assist a user in creating a slide deck for a presentation.
     Your task is to help the user create one slide. Do not create an outline. Only focus on one slide.
 
@@ -44,11 +44,11 @@ const sidekick: Sidekick = {
 
     When the user answers the questions, regenerate the slide deck with the new information.
     
-    `;
-  },
-  contextStringRender: (context) => {
-    return ``;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return ``
+    }
+}
 
-export default sidekick;
+export default sidekick

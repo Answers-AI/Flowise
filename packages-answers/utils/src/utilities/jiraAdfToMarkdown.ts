@@ -1,20 +1,20 @@
 interface Node {
-  type: string;
-  content?: Node[];
-  text?: string;
-  parent?: {
-    type: string;
-  };
-  attrs?: {
-    username?: string;
-    state?: string;
-    level?: number;
-    shortName?: string;
-    url?: string;
-    type?: string;
-    altText?: string;
-    align?: string;
-  };
+    type: string
+    content?: Node[]
+    text?: string
+    parent?: {
+        type: string
+    }
+    attrs?: {
+        username?: string
+        state?: string
+        level?: number
+        shortName?: string
+        url?: string
+        type?: string
+        altText?: string
+        align?: string
+    }
 }
 
 // export const jirajiraAdfToMarkdown = (node) => {
@@ -60,97 +60,80 @@ interface Node {
 // };
 
 export const jiraAdfToMarkdown = (node: Node): string => {
-  if (!node) return '';
+    if (!node) return ''
 
-  switch (node.type) {
-    case 'doc':
-      return node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || '';
+    switch (node.type) {
+        case 'doc':
+            return node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || ''
 
-    case 'paragraph':
-      return !node.content
-        ? ''
-        : `${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n\n`;
+        case 'paragraph':
+            return !node.content ? '' : `${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n\n`
 
-    case 'text':
-      return node.text || '';
+        case 'text':
+            return node.text || ''
 
-    case 'hardBreak':
-      return '  \n';
+        case 'hardBreak':
+            return '  \n'
 
-    case 'mention':
-      return `@${node.attrs?.username || ''}`;
+        case 'mention':
+            return `@${node.attrs?.username || ''}`
 
-    // case 'emoji':
-    //   return `:${node.attrs?.shortName || ''}:`;
+        // case 'emoji':
+        //   return `:${node.attrs?.shortName || ''}:`;
 
-    case 'link':
-      return `[${node.text || ''}](${node.attrs?.url || ''})`;
+        case 'link':
+            return `[${node.text || ''}](${node.attrs?.url || ''})`
 
-    case 'bulletList':
-    case 'taskList':
-      return node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || '';
+        case 'bulletList':
+        case 'taskList':
+            return node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || ''
 
-    case 'orderedList':
-      return (
-        node.content?.map((item, index) => `${index + 1}. ${jiraAdfToMarkdown(item)}`).join('') ||
-        ''
-      );
+        case 'orderedList':
+            return node.content?.map((item, index) => `${index + 1}. ${jiraAdfToMarkdown(item)}`).join('') || ''
 
-    case 'listItem':
-      if (node.parent?.type === 'taskList') {
-        const checkbox = node.attrs?.state === 'DONE' ? '[x]' : '[ ]';
-        return `  * ${checkbox} ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n`;
-      } else {
-        return `  * ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n`;
-      }
+        case 'listItem':
+            if (node.parent?.type === 'taskList') {
+                const checkbox = node.attrs?.state === 'DONE' ? '[x]' : '[ ]'
+                return `  * ${checkbox} ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n`
+            } else {
+                return `  * ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n`
+            }
 
-    case 'heading':
-      return `${'#'.repeat(node.attrs?.level || 1)} ${node.content
-        ?.map((item) => jiraAdfToMarkdown(item))
-        .join('')}\n\n`;
+        case 'heading':
+            return `${'#'.repeat(node.attrs?.level || 1)} ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n\n`
 
-    case 'blockquote':
-      return `> ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n`;
+        case 'blockquote':
+            return `> ${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}\n`
 
-    case 'codeBlock':
-      if (node.text) {
-        return `\`\`\`\n${node.text || ''}\n\`\`\`\n\n`;
-      } else {
-        return `\`\`\`\n${node.content
-          ?.map((item) => jiraAdfToMarkdown(item))
-          .join('')}}\n\`\`\`\n\n`;
-      }
+        case 'codeBlock':
+            if (node.text) {
+                return `\`\`\`\n${node.text || ''}\n\`\`\`\n\n`
+            } else {
+                return `\`\`\`\n${node.content?.map((item) => jiraAdfToMarkdown(item)).join('')}}\n\`\`\`\n\n`
+            }
 
-    case 'mediaGroup':
-      return node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || '';
+        case 'mediaGroup':
+            return node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || ''
 
-    case 'media':
-      return `!${
-        node.attrs?.type === 'external'
-          ? `[${node.attrs?.altText || ''}](${node.attrs?.url || ''})`
-          : ''
-      }`;
+        case 'media':
+            return `!${node.attrs?.type === 'external' ? `[${node.attrs?.altText || ''}](${node.attrs?.url || ''})` : ''}`
 
-    case 'table':
-      const header = node.content?.find((item) => item.type === 'tableHeader');
-      const rows = node.content?.filter((item) => item.type === 'tableRow');
-      const separator = header ? `${'|'.repeat(header.content?.length || 0)}\n` : '';
-      const headerRow = header
-        ? `| ${header.content?.map((item) => jiraAdfToMarkdown(item)).join(' | ')} |\n${separator}`
-        : '';
-      const body = rows
-        ?.map((row) => `| ${row.content?.map((item) => jiraAdfToMarkdown(item)).join(' | ')} |\n`)
-        .join('');
-      return `${headerRow}${body}`;
+        case 'table':
+            const header = node.content?.find((item) => item.type === 'tableHeader')
+            const rows = node.content?.filter((item) => item.type === 'tableRow')
+            const separator = header ? `${'|'.repeat(header.content?.length || 0)}\n` : ''
+            const headerRow = header ? `| ${header.content?.map((item) => jiraAdfToMarkdown(item)).join(' | ')} |\n${separator}` : ''
+            const body = rows?.map((row) => `| ${row.content?.map((item) => jiraAdfToMarkdown(item)).join(' | ')} |\n`).join('')
+            return `${headerRow}${body}`
 
-    case 'tableCell':
-      const content = node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || '';
-      const isHeader = node.parent?.type === 'tableHeader';
-      const tcSeparator: string = isHeader ? '---' : '   ';
-      const padding = isHeader ? ':' : ' ';
-      return ` ${padding}${content.padEnd(tcSeparator.length, ' ')}${padding}${tcSeparator}`;
+        case 'tableCell':
+            const content = node.content?.map((item) => jiraAdfToMarkdown(item)).join('') || ''
+            const isHeader = node.parent?.type === 'tableHeader'
+            const tcSeparator: string = isHeader ? '---' : '   '
+            const padding = isHeader ? ':' : ' '
+            return ` ${padding}${content.padEnd(tcSeparator.length, ' ')}${padding}${tcSeparator}`
 
-    default:
-      return '';
-  }
-};
+        default:
+            return ''
+    }
+}

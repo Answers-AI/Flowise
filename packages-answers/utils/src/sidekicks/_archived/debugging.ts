@@ -1,15 +1,14 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const debugging: Sidekick = {
-  departments: ['engineering'],
-  label: 'Debugging Expert',
-  value: 'debugging',
-  placeholder:
-    'I can debug code for you. Paste in the error and I will help you fix it. Works best with codebases',
-  getSystemPromptTemplate: () => {
-    return `You are a code debugging expert assistant. You specialize in debugging typescript and javascript applications with NextJS`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    departments: ['engineering'],
+    label: 'Debugging Expert',
+    value: 'debugging',
+    placeholder: 'I can debug code for you. Paste in the error and I will help you fix it. Works best with codebases',
+    getSystemPromptTemplate: () => {
+        return `You are a code debugging expert assistant. You specialize in debugging typescript and javascript applications with NextJS`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
       A user is having this error:\n\n
       ${query}\n\n
       The bug is potenitally in one of these files:\n\n
@@ -25,11 +24,11 @@ const debugging: Sidekick = {
       Where there may be incomplete context, explain how that impacts your answer.
       Explain to me where you are not confident.
       Suggest followup information the user can ask to make you more confident in your reponse.
-      `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath ?? context.url}\n${context.code ?? context.text}\n\n`;
-  }
-};
+      `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath ?? context.url}\n${context.code ?? context.text}\n\n`
+    }
+}
 
-export default debugging;
+export default debugging

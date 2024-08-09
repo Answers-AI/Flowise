@@ -1,15 +1,15 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 
 const refactor: Sidekick = {
-  departments: ['engineering'],
-  label: 'Refactoring Expert',
-  value: 'refactor',
-  placeholder: 'I can create refactor code for you',
-  getSystemPromptTemplate: () => {
-    return `You are a code refactoring assistant.`;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `You specialize in building typescript and javascript applications with OpenAI.
+    departments: ['engineering'],
+    label: 'Refactoring Expert',
+    value: 'refactor',
+    placeholder: 'I can create refactor code for you',
+    getSystemPromptTemplate: () => {
+        return `You are a code refactoring assistant.`
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `You specialize in building typescript and javascript applications with OpenAI.
       I want you to refactor these code files:\n\n
       ${context}\n\n
       I want you to use these instructions:\n
@@ -21,11 +21,11 @@ const refactor: Sidekick = {
       Do not write all of the code
       please add detailed step by step comments inside functions where the code will be for each file
       please provide an appropriate response in markdown.
-      only respond with the refactored code, comments and be detailed`;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath ?? context.url}\n${context.code ?? context.text}\n\n`;
-  }
-};
+      only respond with the refactored code, comments and be detailed`
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath ?? context.url}\n${context.code ?? context.text}\n\n`
+    }
+}
 
-export default refactor;
+export default refactor

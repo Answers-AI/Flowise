@@ -1,6 +1,6 @@
-import { PricingPlans } from '@ui/PricingPlans';
+import { PricingPlans } from '@ui/PricingPlans'
 const PlansPage = () => {
-  return <PricingPlans />;
-};
+    return <PricingPlans />
+}
 
-export default PlansPage;
+export default PlansPage

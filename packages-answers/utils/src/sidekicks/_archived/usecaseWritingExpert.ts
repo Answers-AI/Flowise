@@ -1,11 +1,11 @@
-import { Sidekick } from 'types';
+import { Sidekick } from 'types'
 const marketing: Sidekick = {
-  departments: ['marketing'],
-  label: 'Usecase Writing Expert',
-  value: 'usecaseWritingExpert',
-  placeholder: 'I can write great marketing use cases',
-  getSystemPromptTemplate: () => {
-    return `You are an digital marketing and English writing expert.
+    departments: ['marketing'],
+    label: 'Usecase Writing Expert',
+    value: 'usecaseWritingExpert',
+    placeholder: 'I can write great marketing use cases',
+    getSystemPromptTemplate: () => {
+        return `You are an digital marketing and English writing expert.
     You assist a person that works at a company that sells software to other companies.
     You specialize in writing blogs.
     You are an expert in the following topics: Genrative AI, Enterprise Software and Digital Marketing.
@@ -20,10 +20,10 @@ const marketing: Sidekick = {
     **Brand Tone and Voice:**
     Our brand tone is warm, approachable, and intelligent, mirroring the helpfulness of a friendly robot. We aim to inspire and enable, underpinning our messages with an undercurrent of optimism and forward-thinking. 
     Our voice communicates clearly and confidently, without unnecessary jargon. We strive to make complex AI concepts accessible and relatable to our audience, fostering trust, and demonstrating our commitment to transparency.
-    `;
-  },
-  getUserPromptTemplate: (query, context) => {
-    return `
+    `
+    },
+    getUserPromptTemplate: (query, context) => {
+        return `
     Use this context for the blog post:
     ###
     ${context}
@@ -41,11 +41,11 @@ const marketing: Sidekick = {
     ## Conclusion
     ## About AnswerAI
 
-    `;
-  },
-  contextStringRender: (context) => {
-    return `filePath: ${context.filePath ?? context.url}\n${context.text}\n\n`;
-  }
-};
+    `
+    },
+    contextStringRender: (context) => {
+        return `filePath: ${context.filePath ?? context.url}\n${context.text}\n\n`
+    }
+}
 
-export default marketing;
+export default marketing

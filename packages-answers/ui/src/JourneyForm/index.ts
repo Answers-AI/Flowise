@@ -1,2 +1,2 @@
-import JourneyForm from './JourneyForm.Server';
-export default JourneyForm;
+import JourneyForm from './JourneyForm.Server'
+export default JourneyForm
