@@ -2,7 +2,6 @@ const { PrismaPlugin } = require('experimental-prisma-webpack-plugin')
 
 const webpack = require('webpack')
 // const { withSentryConfig } = require('@sentry/nextjs');
-console.log(process.env)
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true'
 })
