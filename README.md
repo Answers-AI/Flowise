@@ -1,20 +1,20 @@
 <!-- markdownlint-disable MD030 -->
 
-<img width="100%" src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise.png?raw=true"></a>
+<img width="100%" src="https://github.com/AnswerAI/Flowise/blob/main/images/flowise.png?raw=true"></a>
 
 # Flowise - Build LLM Apps Easily
 
-[![Release Notes](https://img.shields.io/github/release/FlowiseAI/Flowise)](https://github.com/FlowiseAI/Flowise/releases)
+[![Release Notes](https://img.shields.io/github/release/FlowiseAI/Flowise)](https://github.com/AnswerAI/Flowise/releases)
 [![Discord](https://img.shields.io/discord/1087698854775881778?label=Discord&logo=discord)](https://discord.gg/jbaHfsRVBW)
 [![Twitter Follow](https://img.shields.io/twitter/follow/FlowiseAI?style=social)](https://twitter.com/FlowiseAI)
 [![GitHub star chart](https://img.shields.io/github/stars/FlowiseAI/Flowise?style=social)](https://star-history.com/#FlowiseAI/Flowise)
-[![GitHub fork](https://img.shields.io/github/forks/FlowiseAI/Flowise?style=social)](https://github.com/FlowiseAI/Flowise/fork)
+[![GitHub fork](https://img.shields.io/github/forks/FlowiseAI/Flowise?style=social)](https://github.com/AnswerAI/Flowise/fork)
 
 English | [中文](./README-ZH.md) | [日本語](./README-JA.md) | [한국어](./README-KR.md)
 
 <h3>Drag & drop UI to build your customized LLM flow</h3>
-<a href="https://github.com/FlowiseAI/Flowise">
-<img width="100%" src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise.gif?raw=true"></a>
+<a href="https://github.com/AnswerAI/Flowise">
+<img width="100%" src="https://github.com/AnswerAI/Flowise/blob/main/images/flowise.gif?raw=true"></a>
 
 ## ⚡Quick Start
 
@@ -85,7 +85,7 @@ Flowise has 3 different modules in a single mono repository.
 1. Clone the repository
 
     ```bash
-    git clone https://github.com/FlowiseAI/Flowise.git
+    git clone https://github.com/AnswerAI/Flowise.git
     ```
 
 2. Go into repository folder
@@ -137,7 +137,7 @@ FLOWISE_PASSWORD=1234
 
 ## 🌱 Env Variables
 
-Flowise support different environment variables to configure your instance. You can specify the following variables in the `.env` file inside `packages/server` folder. Read [more](https://github.com/FlowiseAI/Flowise/blob/main/CONTRIBUTING.md#-env-variables)
+Flowise support different environment variables to configure your instance. You can specify the following variables in the `.env` file inside `packages/server` folder. Read [more](https://github.com/AnswerAI/Flowise/blob/main/CONTRIBUTING.md#-env-variables)
 
 ## 📖 Documentation
 
@@ -187,13 +187,13 @@ Coming soon
 
 ## 🙋 Support
 
-Feel free to ask any questions, raise problems, and request new features in [discussion](https://github.com/FlowiseAI/Flowise/discussions)
+Feel free to ask any questions, raise problems, and request new features in [discussion](https://github.com/AnswerAI/Flowise/discussions)
 
 ## 🙌 Contributing
 
 Thanks go to these awesome contributors
 
-<a href="https://github.com/FlowiseAI/Flowise/graphs/contributors">
+<a href="https://github.com/AnswerAI/Flowise/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=FlowiseAI/Flowise" />
 </a>
 
